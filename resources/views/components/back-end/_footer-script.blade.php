@@ -28,6 +28,7 @@
 
 <!-- Buttons Print JS -->
 <script src="https://cdn.datatables.net/buttons/2.3.1/js/buttons.print.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 
 <script src="{{url("assets/back-end/js/datatables-simple-demo.js")}}"></script>
 <script src="{{url("assets/back-end/js/custom.js")}}"></script>
