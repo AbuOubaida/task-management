@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +31,36 @@ Route::middleware(['auth'])->group(function (){
     Route::middleware(['role:administrator'])->prefix('admin')->group(function () {
         Route::controller(DashboardController::class)->group(function (){
             Route::get('/dashboard','index')->name('admin.dashboard');
+        });
+
+        Route::controller(UserController::class)->prefix('user')->group(function (){
+            Route::match(['get','post'],'create','create')->name('add.user');
+            Route::get('list','show')->name('user.list');
+            Route::match(['get','put'],'edit/{userID}','edit')->name('user.edit');
+            Route::delete('delete','destroy')->name('user.delete');
+        });
+    });
+
+    Route::middleware(['role:project_manager'])->prefix('project-manager')->group(function (){
+        Route::controller(\App\Http\Controllers\project_manager\DashboardController::class)->group(function (){
+            Route::get('/dashboard','index')->name('project.manager.dashboard');
+        });
+    });
+
+    Route::middleware(['checkRole:project_manager;administrator'])->prefix('project-manage')->group(function () { // same route for multiple role permission
+        Route::controller(ProjectController::class)->prefix('project')->group(function (){
+            Route::match(['get','post'],'create','create')->name('add.project');
+
+            Route::get("list",'show')->name('project.list');
+
+            Route::match(['get','put'],'edit/{projectID}','edit')->name('project.edit');
+
+            Route::get('single-view/{projectID}','index')->name('project.view');
+
+            Route::delete('delete','destroy')->name('project.delete');
+        });
+        Route::controller(\App\Http\Controllers\TaskController::class)->prefix('project/task')->group(function (){
+            Route::post('create','store')->name('create.task');
         });
     });
 });

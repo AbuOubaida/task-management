@@ -47,4 +47,9 @@ class User extends Authenticatable implements LaratrustUser
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function hasAnyRole(array $roles)
+    {
+        return $this->roles->pluck('name')->intersect($roles)->isNotEmpty();
+    }
 }

@@ -13,16 +13,16 @@ class DashboardController extends Controller
      */
     public function index()
     {
-//        try {
+        try {
             return view('admin.dashboard');
-//        }catch (\Throwable $exception)
-//        {
-//            Log::error('An error occurred in index method: ' . $exception->getMessage(), [
-//                'file' => $exception->getFile(),
-//                'line' => $exception->getLine(),
-//            ]);
-//            return abort(500);
-//        }
+        }catch (\Throwable $exception)
+        {
+            Log::error('An error occurred in index method: ' . $exception->getMessage(), [
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+            ]);
+            return abort(500);
+        }
     }
 
     /**

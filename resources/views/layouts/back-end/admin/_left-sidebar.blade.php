@@ -2,7 +2,7 @@
     <div class="sb-sidenav-menu">
         <div class="nav">
         @if(Route::currentRouteName() == 'dashboard')
-            <a class="nav-link" href="{{route('dashboard')}}">
+            <a class="nav-link text-capitalize" href="{{route('dashboard')}}">
                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                 Dashboard
             </a>
@@ -12,34 +12,39 @@
                 Dashboard
             </a>
         @endif
-{{--        @if(Route::currentRouteName() == 'home.page' )--}}
-{{--            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#pages" aria-expanded="true" aria-controls="pages">--}}
-{{--                <div class="sb-nav-link-icon"><i class="fa-solid fa-folder"></i></div>--}}
-{{--                Pages--}}
-{{--                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>--}}
-{{--            </a>--}}
-{{--            <div class="collapse show" id="pages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">--}}
-{{--        @else--}}
-{{--            <a class="nav-link collapsed text-black" href="#" data-bs-toggle="collapse" data-bs-target="#pages" aria-expanded="false" aria-controls="pages">--}}
-{{--                <div class="sb-nav-link-icon"><i class="fa-solid fa-folder"></i></div>--}}
-{{--                Pages--}}
-{{--                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>--}}
-{{--            </a>--}}
-{{--            <div class="collapse" id="pages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">--}}
-{{--        @endif--}}
-{{--                <nav class="sb-sidenav-menu-nested nav">--}}
-{{--                    @if(Route::currentRouteName() == 'home.page')--}}
-{{--                        <a class="nav-link" href="{{route('home.page')}}"><div class="sb-nav-link-icon"><i class="fa-solid fa-circle-plus"></i></div> Home</a>--}}
-{{--                    @else--}}
-{{--                        <a class="nav-link text-black" href="{{route('home.page')}}"><div class="sb-nav-link-icon"><i class="fa-solid fa-circle-plus"></i></div> Home</a>--}}
-{{--                    @endif--}}
-{{--                    @if(Route::currentRouteName() == 'about.page')--}}
-{{--                        <a class="nav-link" href="{{route('about.page')}}"><div class="sb-nav-link-icon"><i class="fa-solid fa-info"></i></div> About</a>--}}
-{{--                    @else--}}
-{{--                        <a class="nav-link text-black" href="{{route('about.page')}}"><div class="sb-nav-link-icon"><i class="fa-solid fa-info"></i></div> About</a>--}}
-{{--                    @endif--}}
-{{--                </nav>--}}
-{{--            </div>--}}
+        @if(\Illuminate\Support\Facades\Auth::user()->roles->first()->name == 'administrator')
+            @if(Request::segment(2) == "user" )
+                <a class="nav-link text-capitalize" href="#" data-bs-toggle="collapse" data-bs-target="#users" aria-expanded="true" aria-controls="users">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
+                        Users
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse show" id="users" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionusers">
+            @else
+                <a class="nav-link collapsed text-black" href="#" data-bs-toggle="collapse" data-bs-target="#users" aria-expanded="false" aria-controls="users">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
+                    Users
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="users" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionusers">
+            @endif
+                    <nav class="sb-sidenav-menu-nested nav">
+                        @if(Route::currentRouteName() == 'add.user')
+                            <a class="nav-link text-capitalize" href="{{route('add.user')}}"><div class="sb-nav-link-icon"><i class="fa-solid fa-user-plus"></i></div> Add</a>
+                        @else
+                            <a class="nav-link text-black" href="{{route('add.user')}}"><div class="sb-nav-link-icon"><i class="fa-solid fa-user-plus"></i></div> Add</a>
+                        @endif
+                        @if(Route::currentRouteName() == 'user.list')
+                            <a class="nav-link text-capitalize" href="{{route('user.list')}}"><div class="sb-nav-link-icon"><i class="fa-solid fa-list"></i></div> List</a>
+                        @else
+                            <a class="nav-link text-black" href="{{route('user.list')}}"><div class="sb-nav-link-icon"><i class="fa-solid fa-list"></i></div> List</a>
+                        @endif
+                    </nav>
+                </div>
+        @endif
+        @if(\Illuminate\Support\Facades\Auth::user()->roles->first()->name == 'administrator' || Illuminate\Support\Facades\Auth::user()->roles->first()->name == 'project_manager')
+            @include('common._project_sidebar')
+        @endif
         </div>
     </div>
     <div class="sb-sidenav-footer text-black">
