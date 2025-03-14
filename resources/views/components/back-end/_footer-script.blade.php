@@ -33,6 +33,8 @@
 <script src="{{url("assets/back-end/js/datatables-simple-demo.js")}}"></script>
 <script src="{{url("assets/back-end/js/custom.js")}}"></script>
 <script src="{{url("assets/back-end/js/datatables2.js")}}"></script>
+<script src="{{url("assets/back-end/js/chart-area-demo.js")}}"></script>
+<script src="{{url("assets/back-end/js/chart-bar-demo.js")}}"></script>
 <script>
     $('.close').click(function() {
         $(".alert").hide(500)
